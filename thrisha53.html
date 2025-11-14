@@ -1,1 +1,382 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Thrisha — Portfolio</title>
+  <meta name="description" content="Portfolio of Thrisha — Frontend developer & Designer">
+  <style>
+    /* ========== CSS RESET ========== */
+    :root{
+      --bg:#0f1724; --card:#0b1220; --muted:#9aa4b2; --accent:#7c3aed; --accent-2:#06b6d4; --glass: rgba(255,255,255,0.04);
+      --ff-sans: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      --radius:14px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;}
+    body{
+      margin:0;font-family:var(--ff-sans);background:linear-gradient(180deg,#071026 0%, var(--bg) 100%);color:#e6eef6;line-height:1.45;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+      scroll-behavior:smooth;padding-bottom:80px;
+    }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
 
+    /* ========== LAYOUT ========== */
+    .container{width:min(1100px,94%);margin:0 auto}
+    header{position:fixed;left:0;right:0;top:14px;z-index:40}
+    .nav{backdrop-filter:blur(6px);background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:10px;border-radius:12px;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700;letter-spacing:0.6px}
+    nav ul{display:flex;gap:14px;list-style:none;margin:0;padding:0}
+    nav a{padding:8px 10px;border-radius:8px;color:var(--muted);font-weight:600;font-size:14px}
+    nav a:hover{color:#fff;background:rgba(255,255,255,0.03)}
+    .cta{display:flex;gap:8px;align-items:center}
+    .btn{background:linear-gradient(90deg,var(--accent),#5b21b6);padding:8px 12px;border-radius:10px;color:#fff;font-weight:700;border:0;cursor:pointer}
+    .ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 10px;border-radius:10px;color:var(--muted)}
+
+    /* ========== HERO ========== */
+    .hero{display:grid;grid-template-columns:460px 1fr;gap:36px;align-items:center;padding:110px 0 64px}
+    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:18px;padding:28px;box-shadow:0 8px 30px rgba(2,6,23,0.6);display:flex;gap:18px}
+    .hero-left{width:420px}
+    .hero-photo{width:160px;height:160px;border-radius:16px;overflow:hidden;flex-shrink:0;background:linear-gradient(180deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700}
+    .hero-h1{font-size:28px;margin:0 0 6px}
+    .hero-p{color:var(--muted);margin:0 0 12px}
+    .skills{display:flex;flex-wrap:wrap;gap:8px}
+    .chip{background:var(--glass);padding:6px 10px;border-radius:999px;color:var(--muted);font-weight:600;font-size:13px}
+
+    /* right column intro */
+    .intro{padding:18px;border-radius:12px;background:rgba(255,255,255,0.02)}
+    .intro h2{margin:0 0 8px}
+    .intro p{color:var(--muted);margin:0}
+
+    /* ========== SECTION BASE ========== */
+    section{padding:64px 0}
+    .section-title{display:flex;align-items:end;gap:12px;margin-bottom:18px}
+    .eyebrow{color:var(--accent);font-weight:800;letter-spacing:1px;font-size:12px}
+    .title{font-size:20px;margin:0}
+    .lead{color:var(--muted);max-width:720px}
+
+    /* ========== SERVICES ========== */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:20px;border-radius:12px}
+    .card h3{margin:0 0 6px}
+    .card p{color:var(--muted);margin:0}
+
+    /* ========== PORTFOLIO FILTER ========== */
+    .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+    .filter{padding:8px 12px;border-radius:999px;background:transparent;border:1px solid rgba(255,255,255,0.04);cursor:pointer;color:var(--muted)}
+    .filter.active{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;border:0}
+    .portfolio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .work{border-radius:12px;overflow:hidden;background:#071426;position:relative}
+    .work .meta{position:absolute;left:12px;bottom:12px;color:#fff;background:rgba(0,0,0,0.35);padding:8px 10px;border-radius:8px;font-weight:700}
+
+    /* ========== TEAM & TESTIMONIALS ========== */
+    .team{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .member{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:14px;border-radius:12px;text-align:center}
+    .member img{width:86px;height:86px;border-radius:12px;margin:0 auto 10px}
+    .quote{background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);padding:16px;border-radius:12px}
+
+    /* ========== CONTACT ========== */
+    .contact{display:grid;grid-template-columns:1fr 420px;gap:20px}
+    form{display:flex;flex-direction:column;gap:10px}
+    input,textarea{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px;border-radius:8px;color:#e6eef6}
+    textarea{min-height:140px}
+
+    /* ========== FOOTER ========== */
+    footer{padding:28px 0 60px;color:var(--muted);text-align:center}
+
+    /* ========== UTILITIES ========== */
+    .center{display:flex;align-items:center;justify-content:center}
+    .muted{color:var(--muted)}
+
+    /* ========== INTERACTIONS ========== */
+    .scroll-top{position:fixed;right:18px;bottom:18px;padding:12px;border-radius:12px;background:linear-gradient(90deg,var(--accent),var(--accent-2));border:0;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,0.4)}
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr;}
+      .grid{grid-template-columns:repeat(2,1fr)}
+      .portfolio-grid{grid-template-columns:repeat(2,1fr)}
+      .team{grid-template-columns:repeat(2,1fr)}
+      .contact{grid-template-columns:1fr}
+      header .nav{padding:8px}
+    }
+    @media (max-width:560px){
+      .grid{grid-template-columns:1fr}
+      .portfolio-grid{grid-template-columns:1fr}
+      nav ul{display:none}
+    }
+
+    /* subtle entrance animations */
+    .reveal{opacity:0;transform:translateY(12px);animation:reveal .7s forwards;}
+    .reveal-delay{animation-delay:.12s}
+    @keyframes reveal{to{opacity:1;transform:none}}
+
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="nav">
+        <div class="brand">
+          <div class="logo">TA</div>
+          <div>
+            <div style="font-weight:800">Thrisha Arumugam</div>
+            <div style="font-size:12px;color:var(--muted)">Frontend Developer • Designer</div>
+          </div>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#team">Team</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="cta">
+          <button class="ghost" id="themeToggle" title="Toggle theme">Toggle</button>
+          <a class="btn" href="#contact">Hire me</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-card reveal">
+        <div class="hero-left">
+          <div class="hero-photo"> <!-- placeholder avatar -->
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="profile" style="width:100%;height:100%;object-fit:cover">
+          </div>
+        </div>
+        <div class="intro">
+          <h2 class="hero-h1">Hi — I'm Thrisha</h2>
+          <p class="hero-p">I craft interactive, accessible, and animated front-end experiences. I like building meaningful websites & small web apps with beautiful UI.</p>
+          <div style="height:12px"></div>
+          <div class="skills">
+            <span class="chip">HTML</span>
+            <span class="chip">CSS</span>
+            <span class="chip">JavaScript</span>
+            <span class="chip">React</span>
+            <span class="chip">Figma</span>
+          </div>
+          <div style="height:12px"></div>
+          <div style="display:flex;gap:8px">
+            <a class="btn" href="#portfolio">See work</a>
+            <a class="ghost" href="#contact">Download CV</a>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding-top:20px" class="reveal reveal-delay">
+        <div class="section-title"><div class="eyebrow">FEATURED</div><h3 class="title">Selected Projects & Highlights</h3></div>
+        <p class="lead muted">A selection of recent projects — responsive, animated, and built with performant frontend techniques.</p>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="section-title"><div class="eyebrow">ABOUT</div><h3 class="title">Who I am</h3></div>
+      <div style="display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start">
+        <div>
+          <p class="lead muted">I'm a 2nd-year B.Tech IT student and frontend developer who loves turning ideas into polished, accessible user interfaces. I focus on HTML, CSS, and modern JS frameworks to build websites and web apps. Outside of code, I play football and kabaddi — team sports keep my problem-solving sharp and collaborative spirit alive.</p>
+          <div style="height:18px"></div>
+          <h4 style="margin:0 0 6px">Core strengths</h4>
+          <ul style="color:var(--muted)">
+            <li>Responsive UI & mobile-first design</li>
+            <li>Performance-minded CSS & animations</li>
+            <li>Component-driven development (React)</li>
+            <li>Design systems & accessible UX</li>
+          </ul>
+        </div>
+        <div>
+          <div class="card">
+            <h3 style="margin-top:0">Quick stats</h3>
+            <p class="muted" style="margin:0">Available for internships and freelance. Open to collaboration on frontend projects.</p>
+            <div style="display:flex;gap:8px;margin-top:12px">
+              <div style="flex:1;text-align:center">
+                <div style="font-weight:800;font-size:18px">12+</div>
+                <div class="muted">Projects</div>
+              </div>
+              <div style="flex:1;text-align:center">
+                <div style="font-weight:800;font-size:18px">2</div>
+                <div class="muted">Sports Won</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services">
+      <div class="section-title"><div class="eyebrow">SERVICES</div><h3 class="title">What I do</h3></div>
+      <div class="grid">
+        <div class="card reveal">
+          <h3>Web Design</h3>
+          <p class="muted">Beautiful responsive layouts, prototyping in Figma, design handoff ready.</p>
+        </div>
+        <div class="card reveal reveal-delay">
+          <h3>Frontend Development</h3>
+          <p class="muted">Modern HTML/CSS, vanilla JS & React. Performance-first, accessible components.</p>
+        </div>
+        <div class="card reveal" style="animation-delay:.20s">
+          <h3>Portfolio & Landing Pages</h3>
+          <p class="muted">Fast, SEO-friendly landing pages and personal portfolio sites that convert.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section id="portfolio">
+      <div class="section-title"><div class="eyebrow">WORK</div><h3 class="title">Selected portfolio</h3></div>
+      <div class="filters" role="tablist" aria-label="Portfolio filters">
+        <button class="filter active" data-filter="*">All</button>
+        <button class="filter" data-filter="web">Web</button>
+        <button class="filter" data-filter="ui">UI</button>
+        <button class="filter" data-filter="games">Games</button>
+      </div>
+
+      <div class="portfolio-grid">
+        <div class="work" data-cat="web">
+          <img src="https://images.unsplash.com/photo-1523475496153-3d6ccf8f7f37?q=80&w=1600&auto=format&fit=crop&s=placeholder" alt="project 1">
+          <div class="meta">Restaurant Landing</div>
+        </div>
+        <div class="work" data-cat="ui">
+          <img src="https://images.unsplash.com/photo-1505685296765-3a2736de412f?q=80&w=1600&auto=format&fit=crop&s=placeholder" alt="project 2">
+          <div class="meta">Dashboard UI</div>
+        </div>
+        <div class="work" data-cat="games">
+          <img src="https://images.unsplash.com/photo-1549880338-65ddcdfd017b?q=80&w=1600&auto=format&fit=crop&s=placeholder" alt="project 3">
+          <div class="meta">Casual Game UI</div>
+        </div>
+        <div class="work" data-cat="web">
+          <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1600&auto=format&fit=crop&s=placeholder" alt="project 4">
+          <div class="meta">Portfolio Site</div>
+        </div>
+        <div class="work" data-cat="ui">
+          <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1600&auto=format&fit=crop&s=placeholder" alt="project 5">
+          <div class="meta">Mobile App Concept</div>
+        </div>
+        <div class="work" data-cat="games">
+          <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1600&auto=format&fit=crop&s=placeholder" alt="project 6">
+          <div class="meta">Puzzle Game</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM -->
+    <section id="team">
+      <div class="section-title"><div class="eyebrow">TEAM</div><h3 class="title">Meet the team</h3></div>
+      <div class="team">
+        <div class="member reveal"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800&auto=format&fit=crop&s=placeholder" alt="member"><div style="font-weight:800">Thrisha</div><div class="muted">Founder & Lead Dev</div></div>
+        <div class="member reveal reveal-delay"><img src="https://images.unsplash.com/photo-1545996124-1e3b3f5c5b30?q=80&w=800&auto=format&fit=crop&s=placeholder" alt="member"><div style="font-weight:800">Kavya</div><div class="muted">UX Designer</div></div>
+        <div class="member reveal" style="animation-delay:.18s"><img src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=800&auto=format&fit=crop&s=placeholder" alt="member"><div style="font-weight:800">Arun</div><div class="muted">Frontend</div></div>
+        <div class="member reveal" style="animation-delay:.22s"><img src="https://images.unsplash.com/photo-1541534401786-12b9a0f1bd2a?q=80&w=800&auto=format&fit=crop&s=placeholder" alt="member"><div style="font-weight:800">Meera</div><div class="muted">QA</div></div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section>
+      <div class="section-title"><div class="eyebrow">TESTIMONIALS</div><h3 class="title">What people say</h3></div>
+      <div class="grid">
+        <div class="quote reveal">
+          <p style="margin:0">"Fast turnaround, thoughtful UI, and clear communication. Delivered above expectations."</p>
+          <div style="height:12px"></div>
+          <div class="muted">— Mentor, College Project</div>
+        </div>
+        <div class="quote reveal reveal-delay">
+          <p style="margin:0">"The portfolio site was clean, responsive and exactly what we needed for the hackathon demo."</p>
+          <div style="height:12px"></div>
+          <div class="muted">— Team Lead</div>
+        </div>
+        <div class="quote reveal" style="animation-delay:.18s">
+          <p style="margin:0">"Great attention to detail — animations are subtle and performance remained excellent."</p>
+          <div style="height:12px"></div>
+          <div class="muted">— Client</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="section-title"><div class="eyebrow">CONTACT</div><h3 class="title">Get in touch</h3></div>
+      <div class="contact">
+        <form onsubmit="event.preventDefault();alert('Thanks — message sent (demo)')">
+          <input type="text" placeholder="Your name" required>
+          <input type="email" placeholder="Email" required>
+          <input type="text" placeholder="Subject">
+          <textarea placeholder="Write your message" required></textarea>
+          <div style="display:flex;gap:8px">
+            <button class="btn" type="submit">Send message</button>
+            <button class="ghost" type="reset">Reset</button>
+          </div>
+        </form>
+
+        <div>
+          <div class="card">
+            <h4 style="margin:0 0 6px">Let's collaborate</h4>
+            <p class="muted" style="margin:0 0 10px">Email: thrisha@example.com<br>Location: Coimbatore, India</p>
+            <div style="height:12px"></div>
+            <div style="display:flex;gap:8px">
+              <a class="ghost" href="#">LinkedIn</a>
+              <a class="ghost" href="#">GitHub</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="muted">© 2025 Thrisha Arumugam — Built with ❤️ • Designed for performance & accessibility</div>
+    </footer>
+
+  </main>
+
+  <button class="scroll-top" title="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">↑</button>
+
+  <script>
+    // Theme toggle (simple invert for demo)
+    const themeBtn = document.getElementById('themeToggle');
+    themeBtn.addEventListener('click', ()=>{
+      if(document.documentElement.style.getPropertyValue('--bg') === '#0f1724'){
+        document.documentElement.style.setProperty('--bg','#f7fafc');
+        document.documentElement.style.setProperty('--card','#ffffff');
+        document.documentElement.style.setProperty('--muted','#465a6a');
+        document.documentElement.style.setProperty('--accent','#7c3aed');
+        document.body.style.color='#071426';
+      } else {
+        document.documentElement.style.setProperty('--bg','#0f1724');
+        document.documentElement.style.setProperty('--card','#0b1220');
+        document.documentElement.style.setProperty('--muted','#9aa4b2');
+        document.body.style.color='#e6eef6';
+      }
+    });
+
+    // Portfolio filter
+    document.querySelectorAll('.filter').forEach(btn => {
+      btn.addEventListener('click', ()=>{
+        document.querySelectorAll('.filter').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const f = btn.getAttribute('data-filter');
+        document.querySelectorAll('.portfolio-grid .work').forEach(item=>{
+          if(f==='*' || item.getAttribute('data-cat')===f){
+            item.style.display='block';
+            item.style.opacity=1;
+          } else {
+            item.style.display='none';
+            item.style.opacity=0;
+          }
+        })
+      })
+    })
+
+    // small reveal on load
+    window.addEventListener('load', ()=>{
+      document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.animationDelay=(i*80)+'ms'})
+    })
+  </script>
+</body>
+</html>
